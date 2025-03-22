@@ -11,7 +11,9 @@ import "./globals.css";
 //   variable: "--font-geist-mono",
 //   subsets: ["latin"],
 // });
- // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+
 const monaSans = Mona_Sans({
      variable: "--font-mona-sans",
      subsets: ["latin"],
