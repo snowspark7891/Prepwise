@@ -3,8 +3,8 @@ import React from 'react'
 
 const page = () => {
   return (
-   // <AuthForm type="sign-up" children={children}/>
-   <AuthForm />
+   <AuthForm type="sign-up"/>
+
   )
 }
 
