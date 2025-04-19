@@ -221,7 +221,7 @@ export const dummyInterviews : Interview[] = [
     userId:"userId1  ",
     role:"Backend Devloper",
     type:"technical",
-    techstack:["Express","javascript",'SQL','API'],
+    techstack:["Express","javascript",'SQL','api'],
     level:'fresher',
     questions:["What is Get and put request ?"],
     finalized:false,
