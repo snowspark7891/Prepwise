@@ -1,6 +1,9 @@
-import React from 'react'
+'use client'
+import React, { use, useState } from 'react'
 import Image from "next/image"
 import {cn} from "@/lib/utils";
+import { useRouter } from 'next/navigation';
+import { error } from 'console';
 
 
 enum CallSatus {
@@ -9,16 +12,51 @@ enum CallSatus {
     ACTIVE = 'ACTIVE',
     FINISHED = 'FINISHED',
 }
-const Agent = ({userName}:AgentProps) => {
-    const  callStatus  = CallSatus.FINISHED
-    const isSpeaking = true;
-    const messages = [
-        'Whats your name ?',
-        'My name is Ben, nice to meet you !',
 
-    ];
-    const lastMessage = messages[messages.length - 1]
-    // @ts-ignore
+interface SavedMessage{
+    role: 'user' | 'assistant' | 'system';
+    content: string;
+}
+const Agent = ({userName,userId,type}:AgentProps) => {
+    const router = useRouter();
+    const [isSpeaking, setisSpeaking] = useState(false)
+    const [callStatus, setcallStatus] = useState<CallSatus>(CallSatus.INACTIVE)
+    const [messages, setMessages] = useState<SavedMessage[]>([])
+
+
+    useEffect(() => {
+        const onCallStart = ()=>{ setcallStatus(CallSatus.ACTIVE)}
+        const onCallEnd = () => {
+          setcallStatus(CallSatus.FINISHED);
+        };
+        const onMessage = (messages: Message)=>{
+            if(messages.type==='transcript' && messages.transcriptType === 'final'){
+                const newMessage = {role: messages.role , content : messages.transcript}
+                setMessages((prev) => [...prev, newMessage]);
+            }
+        }
+
+        const onSpeechStart = () => {
+            setisSpeaking(true);
+        };
+          const onSpeechEnd = () => {
+            setisSpeaking(false);
+          };
+         
+        const onError =(error:Error)=>{
+            console.log('Error',error)
+            setcallStatus(CallSatus.FINISHED)
+        }  
+    },[])
+    // const  callStatus  = CallSatus.FINISHED
+    // const isSpeaking = true;
+    // const messages = [
+    //     'Whats your name ?',
+    //     'My name is Neha, nice to meet you !',
+
+    // ];
+    // const lastMessage = messages[messages.length - 1]
+   
     return (
         <>
         <div className='call-view'>
