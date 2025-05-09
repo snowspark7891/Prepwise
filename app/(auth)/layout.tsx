@@ -13,5 +13,5 @@ const AuthLayout = async ({children}:{children : ReactNode}) => {
     <div className='auth-layout'>{children}</div>
   )
 }
-
+//hi
 export default AuthLayout

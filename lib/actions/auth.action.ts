@@ -118,3 +118,18 @@ export async function isAuthenticated(){
 
          return !!user;   //by this we can make it in a boolean form
 } 
+
+
+export async function getInterviewByUserId(userId: string): Promise<Interview[] | null> {
+       const Interviews = await db
+                 .collection('interviews')
+                 .where('userId', '==', userId)
+                 .orderBy('createdAt', 'desc')
+                 .get();
+
+     return Interviews.docs.map((doc) => ({
+       id: doc.id,
+       ...doc.data(),
+     })) as Interview[];           
+
+} 
